@@ -40,13 +40,25 @@ html, body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    align-items: center;
+    height: 70vh;
+    width: 100vw;
+    top: 10vh;
 }
 
 #loading-label {
-  font-size: 4rem !important;
+  font-size: 2rem !important;
     z-index: 1000;
     opacity: 0;
     transition: 5s ease;
+    text-align: left;
+    width: 8rem;
+    transform: translateX(-1rem)
+}
+
+#main-loading-tip {
+  font-size: 2rem;
+  transform: translateY(-10rem)
 }
 
 /* Gradient overlays */
