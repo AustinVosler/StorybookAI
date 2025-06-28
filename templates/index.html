@@ -32,7 +32,7 @@
                 <div class="text-input-container">
                     <label type="text">Tell me a story about</label>
                     <input type="text" placeholder="..." oninput="toggleButton(this)" />
-                    <button class="submit-btn disabled" disabled>➤</button>
+                    <button class="submit-btn disabled" disabled onclick="gotoLoadingScreen()">➤</button>
                 </div>
                 <div class="voice-input-container" style="display: none;">
                     <button class="mic-btn" onclick="startRecording()"><img src="{{ url_for('static', filename='img/record.png') }}"></button>
@@ -105,5 +105,13 @@
 
   function startRecording() {
     document.querySelector("audio-label").classList.remove("hidden")
+  }
+
+
+  function gotoLoadingScreen() {
+    document.querySelector(".container").style.opacity = 0;
+    setTimeout(()=>{
+        window.location.replace('/loading');
+    },250)
   }
 </script>
