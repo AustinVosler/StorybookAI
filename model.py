@@ -107,7 +107,8 @@ def generate_story(story_id, query):
                 print("Data preview:", part.inline_data.data[:20])
                 
                 data = part.inline_data.data
-                if isinstance(data, str):
+                print(part.inline_data.data[3])
+                if part.inline_data.data[3] != 71:
                     data = base64.b64decode(data)
                 image = Image.open(BytesIO(data))
                 image.load()
