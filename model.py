@@ -106,7 +106,8 @@ def generate_story(story_id, query):
                 print("Data preview:", part.inline_data.data[:20])
                 image = Image.open(BytesIO(part.inline_data.data))
                 image.load()
-                image.save(f'{story_id}_{i+1}.png')
+                os.makedirs("static/images", exist_ok=True)
+                image.save(f'static/images/{story_id}_{i+1}.png')
                 print(f"image {i+1} saved")
                 
     return story_pages

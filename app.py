@@ -32,7 +32,9 @@ def loading():
 
 @app.route("/reading")
 def reading():
-    return render_template('reading.html')
+    image_dir = os.path.join(app.static_folder, "images")
+    images = [f"images/{f}" for f in os.listdir(image_dir) if f.endswith(".png")]
+    return render_template('reading.html', images=images)
 
 @app.route("/generate", methods=['POST'])
 def generate():
