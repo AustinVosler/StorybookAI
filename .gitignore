@@ -1,2 +1,4 @@
 .env
 /sitevenv/lib/python3.11/site-packages
+*.png
+*.wav
