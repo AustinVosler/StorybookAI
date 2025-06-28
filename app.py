@@ -29,6 +29,10 @@ def home():
 def loading():
     return render_template('loading.html')
 
+@app.route("/reading")
+def reading():
+    return render_template('reading.html')
+
 @app.route("/generate", methods=['POST'])
 def generate():
     print("DJSFKLSDLKFDKLFJKSLDJFSLKDJFSLKJFLJFKLDSFJLKF")
