@@ -1,8 +1,8 @@
 .sky-animation {
-    position:absolute;
+    position: absolute;
     height: 40vh;
     width: 100vw;
-    background: linear-gradient(rgba(0,0,0,0.75), transparent);
+    background: linear-gradient(rgba(0, 0, 0, 0.75), transparent);
     opacity: 0;
     animation: fade-in 2s forwards;
 }
@@ -11,6 +11,7 @@
     from {
         opacity: 0;
     }
+
     to {
         opacity: 1;
     }
@@ -26,20 +27,51 @@
 }
 
 @keyframes flicker {
-    0% { opacity: 0; transform: scale(1); }
-    10% { opacity: 0.6; }
-    20% { opacity: 1; }
-    30% { opacity: 0.8; }
-    40% { opacity: 1; }
-    50% { opacity: 0.9; }
-    60% { opacity: 1; }
-    70% { opacity: 0.7; }
-    80% { opacity: 1; }
-    100% { opacity: 0; transform: scale(1.5); }
+    0% {
+        opacity: 0;
+        transform: scale(1);
+    }
+
+    10% {
+        opacity: 0.6;
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    30% {
+        opacity: 0.8;
+    }
+
+    40% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.9;
+    }
+
+    60% {
+        opacity: 1;
+    }
+
+    70% {
+        opacity: 0.7;
+    }
+
+    80% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(1.5);
+    }
 }
 
 
-.container {
+/* .container {
     height: 100vh;
 }
 
@@ -47,4 +79,69 @@
     filter: invert(70%);
     height: 80vh;
     margin-top: 10vh;
+} */
+
+/* 
+.center-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.bookcontainer {
+    position: relative;
+    width: 300px;
+    height: 300px;
+}
+
+.bg-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    z-index: 0;
+}
+
+.overlay-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+} */
+
+.container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    /* center horizontally */
+    align-items: center;
+    /* center vertically */
+}
+
+.book-wrapper {
+    position: relative;
+    display: inline-block;
+    height: 80vh;
+}
+
+.book-wrapper img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+}
+
+.book-img {
+    filter: invert(70%);
+    z-index: 2;
+    position: relative;
+    /* ensures it's above and anchors size */
+    display: block;
+    height: 100%;
+}
+
+.background-img {
+    z-index: 1;
 }

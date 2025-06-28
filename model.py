@@ -105,14 +105,12 @@ def generate_story(story_id, query):
             elif part.inline_data is not None:
                 print("MIME type:", part.inline_data.mime_type)
                 print("Data preview:", part.inline_data.data[:20])
-                
                 data = part.inline_data.data
-                print(part.inline_data.data[3])
-                if part.inline_data.data[3] != 71:
-                    data = base64.b64decode(data)
                 image = Image.open(BytesIO(data))
                 image.load()
-                image.save(f'{story_id}_{i+1}.png')
+                os.makedirs("static/images", exist_ok=True)
+                image.save(f'static/images/{story_id}_{i+1}.png')
                 print(f"image {i+1} saved")
+                
                 
     return story_pages

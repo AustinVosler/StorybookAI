@@ -25,7 +25,9 @@ def loading():
 
 @app.route("/reading")
 def reading():
-    return render_template('reading.html')
+    image_dir = os.path.join(app.static_folder, "images")
+    images = [f"images/{f}" for f in os.listdir(image_dir) if f.endswith(".png")]
+    return render_template('reading.html', images=images)
 
 is_generating = False
 
@@ -59,4 +61,4 @@ def check_status():
     return jsonify(status="pending")
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=False)
