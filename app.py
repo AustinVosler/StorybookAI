@@ -5,6 +5,8 @@ import requests
 from dotenv import load_dotenv
 from google.genai import types
 from model import generate_story
+from google import genai
+
 
 # from transcriber import transcribe
 # from werkzeug.utils import secure_filename
