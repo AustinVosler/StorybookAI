@@ -8,6 +8,7 @@ from model import generate_story
 from transcriber import transcribe_audio
 from google import genai
 from pathlib import Path
+from tts import generate_tts
 # from transcriber import transcribe
 # from werkzeug.utils import secure_filename
 
@@ -39,6 +40,7 @@ def generate():
         data = request.get_json()
         print("working query: ",data["query"])
         page_texts = generate_story(1, data["query"])
+        generate_tts(1, page_texts)
         return jsonify({"message": "Story generated successfully!", "page_texts": page_texts}), 200
     except Exception as e:
         print("EXCEPTPTTTTION",e)

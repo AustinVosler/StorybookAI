@@ -99,9 +99,11 @@ def generate_story(story_id, query):
 
         for part in response.candidates[0].content.parts:
             if part.text is not None:
-                print(part.text)
+                # print(part.text)
+                pass
             elif part.inline_data is not None:
                 image = Image.open(BytesIO(part.inline_data.data))
-                image.save(f'{story_id}_{i}.png')
+                image.save(f'{story_id}_{i+1}.png')
+                print(f"image {i+1} saved")
                 
     return story_pages
