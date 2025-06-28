@@ -1,3 +1,4 @@
+import base64
 import re
 import types
 from google import genai
@@ -104,7 +105,8 @@ def generate_story(story_id, query):
             elif part.inline_data is not None:
                 print("MIME type:", part.inline_data.mime_type)
                 print("Data preview:", part.inline_data.data[:20])
-                image = Image.open(BytesIO(part.inline_data.data))
+                data = part.inline_data.data
+                image = Image.open(BytesIO(data))
                 image.load()
                 os.makedirs("static/images", exist_ok=True)
                 image.save(f'static/images/{story_id}_{i+1}.png')

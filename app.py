@@ -53,9 +53,9 @@ def start():
 @app.route('/status')
 def check_status():
     import random
-    if random.random() < 0.1:
+    if random.random() < 0.0:
         return jsonify(status="done", result={"RAHH" : "rahhhhh"})
     return jsonify(status="pending")
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=False)

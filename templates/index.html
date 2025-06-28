@@ -50,7 +50,7 @@
           <canvas id="waveform" width="0" height="60" style="background-color: transparent;"></canvas>
           <div id="loading" class="hidden"><img src="{{ url_for('static', filename='img/buffering.gif') }}"></div>
           <div id="transcription"></div>
-          <button id="submit-btn-2" class="submit-btn disabled hidden">➤</button>
+          <button id="submit-btn-2" class="submit-btn disabled hidden" onclick="textSendButtonPressed()">➤</button>
         </div>
       </div>
 
@@ -82,6 +82,10 @@
 
   function focusInput(e) {
     const container = document.querySelector('.container');
+    if (container.classList.contains('transcription')) {
+      textSendButtonPressed();
+      return;
+    }
     if (!e.target.closest('button')) {
       if (container.classList.contains('mic-mode')) {
         const micBtn = document.querySelector('.mic-btn');
@@ -97,12 +101,14 @@
     btn.classList.toggle("disabled", input.value.trim() === '');
   }
 
+  var isTextMode = true;
+
   function toggleInputMode(clickedBtn) {
     const buttons = document.querySelectorAll('.input-toggle button');
     buttons.forEach(btn => btn.classList.remove('active'));
     clickedBtn.classList.add('active');
 
-    const isTextMode = clickedBtn.classList.contains('text-mode');
+    isTextMode = clickedBtn.classList.contains('text-mode');
     document.querySelector('.text-input-container').style.display = isTextMode ? 'flex' : 'none';
     document.querySelector('.voice-input-container').style.display = isTextMode ? 'none' : 'flex';
     document.querySelector('.container').classList.toggle('text-mode', isTextMode);
@@ -300,7 +306,7 @@
     fetch('/generate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ query: document.querySelector("#story-query").value })
+      body: JSON.stringify({ query: isTextMode ? document.querySelector("#story-query").value : document.querySelector("#transcription").textContent })
     });
   }
 
