@@ -4,6 +4,7 @@ body {
   color: white;
   background: linear-gradient(to bottom, #2a004f, #15002b);
   overflow: hidden;
+  height: 100vh;
 }
 
 .hidden {
@@ -16,6 +17,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
+    transition: opacity 0.25s ease-in;
 }
 
 #bg-img {
