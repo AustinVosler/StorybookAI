@@ -11,6 +11,10 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 def home():
     return render_template('index.html')
 
+@app.route("/loading")
+def loading():
+    return render_template('loading.html')
+
 # @app.route("/transcribe", methods=["POST"])
 # def transcribe_audio():
 #     if "audio" not in request.files:
