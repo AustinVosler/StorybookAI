@@ -110,4 +110,5 @@ def generate_story(story_id, query):
                 image.save(f'static/images/{story_id}_{i+1}.png')
                 print(f"image {i+1} saved")
                 
+                
     return story_pages

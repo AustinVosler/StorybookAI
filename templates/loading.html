@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>APP NAME</title>
+    <title>Storybook AI</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/loading.css') }}">
     <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}"> -->
@@ -12,6 +13,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fuzzy+Bubbles:wght@400;700&display=swap" rel="stylesheet">
 </head>
+
 <body>
     <img id="bg-img" src="{{ url_for('static', filename='img/background-vector.svg') }}">
     <div class="background">
@@ -25,13 +27,14 @@
 
     </div>
 </body>
+
 </html>
 
 <script>
     const starImages = [
-      "{{ url_for('static', filename='img/stars/star-lg.svg') }}",
-      "{{ url_for('static', filename='img/stars/star-md.svg') }}",
-      "{{ url_for('static', filename='img/stars/star-sm.svg') }}"
+        "{{ url_for('static', filename='img/stars/star-lg.svg') }}",
+        "{{ url_for('static', filename='img/stars/star-md.svg') }}",
+        "{{ url_for('static', filename='img/stars/star-sm.svg') }}"
     ];
 
     const starAnimation = document.getElementById('star-animation');
@@ -62,14 +65,14 @@
     const loadingLabel = document.querySelector("#loading-label");
     function loadingLabelLoop(time) {
         loadingLabel.textContent = "Loading."
-        setTimeout(()=>{loadingLabel.textContent = "Loading.."}, time/3)
-        setTimeout(()=>{loadingLabel.textContent = "Loading..."}, 2*(time/3))
-        setTimeout(()=>{loadingLabelLoop(time)}, time)
+        setTimeout(() => { loadingLabel.textContent = "Loading.." }, time / 3)
+        setTimeout(() => { loadingLabel.textContent = "Loading..." }, 2 * (time / 3))
+        setTimeout(() => { loadingLabelLoop(time) }, time)
     }
     loadingLabelLoop(1000);
-    setTimeout(()=>{loadingLabel.style.opacity=1},500)
+    setTimeout(() => { loadingLabel.style.opacity = 1 }, 500)
 
-    
+
     function finish(result) {
         // animate loading label out
         loadingLabel.style.transition = "0.2s ease";
@@ -79,9 +82,9 @@
         starAnimation.style.transition = "1s ease";
         starAnimation.style.filter = "brightness(200%) blur(10px)";
 
-        setTimeout(()=>{
+        setTimeout(() => {
             window.location.replace("/reading")
-        },500)
+        }, 500)
     }
 
 

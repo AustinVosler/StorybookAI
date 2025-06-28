@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>APP NAME</title>
+    <title>Storybook AI</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/reading.css') }}">
 
@@ -21,16 +21,23 @@
 
         </div>
 
-        <div id="image-container">
+        <!-- <div id="image-container">
             {% for img in images %}
             <img src="{{ url_for('static', filename=img) }}" alt="{{ img }}">
             {% else %}
             <p>No images found.</p>
             {% endfor %}
-        </div>
+        </div> -->
+
+        <!-- <div class="container">
+            <img src="{{ url_for('static', filename='img/book.svg') }}">
+        </div> -->
 
         <div class="container">
-            <img src="{{ url_for('static', filename='img/book.svg') }}">
+            <div class="book-wrapper">
+                <img class="background-img" src="{{ url_for('static', filename='images/1_1.png') }}">
+                <img class="book-img" src="{{ url_for('static', filename='img/book.svg') }}">
+            </div>
         </div>
 
 
