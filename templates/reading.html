@@ -33,14 +33,19 @@
             <img src="{{ url_for('static', filename='img/book.svg') }}">
         </div> -->
 
-        <div class="container">
-            <div class="book-wrapper">
-                <img class="background-img" src="{{ url_for('static', filename='images/1_1.png') }}">
-                <img class="book-img" src="{{ url_for('static', filename='img/book.svg') }}">
+        <div class="book">
+            <div class="image-container">
+                <div class="arrow" id="left-arrow" onclick="handleLeftClick()">&#8592;</div>
+                <img id="main-image" src="static/images/1_1.png" alt="Main Image" class="main-image">
+                <div class="arrow" id="right-arrow" onclick="handleRightClick()">&#8594;</div>
             </div>
+
+            <!-- <input type="text" class="textbox" placeholder="Enter your text here"> -->
+
+            <button id="play-button" onclick="playAudio()">Play</button>
+
+            <audio id="audio-player" src="static/audio/1_1.wav"></audio>
         </div>
-
-
     </div>
 </body>
 
@@ -88,13 +93,54 @@
             spawnShiningStar();
         }
     }, 400);
+
+    let imageIndex = 1;
+    const minIndex = 1;
+    const maxIndex = 5;
+
+    document.addEventListener('DOMContentLoaded', updateImageAndAudio);
+
+    function updateImageAndAudio() {
+        const image = document.getElementById('main-image');
+        const audio = document.getElementById('audio-player');
+        const leftArrow = document.getElementById('left-arrow');
+        const rightArrow = document.getElementById('right-arrow');
+
+        image.src = `static/images/1_${imageIndex}.png`;
+        audio.src = `static/audio/1_${imageIndex}.wav`;
+
+        // Show/hide arrows based on current image index
+        leftArrow.style.visibility = (imageIndex === minIndex) ? 'hidden' : 'visible';
+        rightArrow.style.visibility = (imageIndex === maxIndex) ? 'hidden' : 'visible';
+    }
+
+    function handleRightClick() {
+        if (imageIndex < maxIndex) {
+            imageIndex++;
+            updateImageAndAudio();
+        }
+    }
+
+    function handleLeftClick() {
+        if (imageIndex > minIndex) {
+            imageIndex--;
+            updateImageAndAudio();
+        }
+    }
+
+    function playAudio() {
+        const audio = document.getElementById('audio-player');
+        audio.play().catch(err => {
+            console.error("Failed to play audio:", err);
+        });
+    }
 </script>
 
 
-<!-- THE MAIN SCRIPT!!! -->
+<!-- THE MAIN SCRIPT!!!
 
 <script>
 
 
 
-</script>
+</script> -->
