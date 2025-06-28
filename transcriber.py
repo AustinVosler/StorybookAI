@@ -1,42 +1,57 @@
-# transcriber.py
+from flask import Flask, render_template, request, jsonify
+import os
+import base64
+import requests
+from dotenv import load_dotenv
+from google.genai import types
+from model import generate_story
+from google import genai
 
-import torch
-from transformers import AutoModelForSpeechSeq2Seq, AutoProcessor, pipeline
-import torchaudio
+load_dotenv()
 
-device = "cuda:0" if torch.cuda.is_available() else "cpu"
-torch_dtype = torch.float16 if torch.cuda.is_available() else torch.float32
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY") or "MISSING"
+GEMINI_ENDPOINT = os.getenv("GEMINI_ENDPOINT") or "MISSING"
 
-model_id = "distil-whisper/distil-large-v3"
+if GEMINI_API_KEY == "MISSING":
+    raise ValueError("Missing Gemini API key. Did you load the .env file?")
 
-model = AutoModelForSpeechSeq2Seq.from_pretrained(
-    model_id, torch_dtype=torch_dtype, low_cpu_mem_usage=True, use_safetensors=True
-)
-model.to(device)
 
-processor = AutoProcessor.from_pretrained(model_id)
+client = genai.Client()
 
-pipe = pipeline(
-    "automatic-speech-recognition",
-    model=model,
-    tokenizer=processor.tokenizer,
-    feature_extractor=processor.feature_extractor,
-    max_new_tokens=128,
-    torch_dtype=torch_dtype,
-    device=device,
-)
+UPLOAD_FOLDER = "uploads"
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-def transcribe(audio_file_path):
-    # Load audio file using torchaudio
-    speech_array, sampling_rate = torchaudio.load(audio_file_path)
+def transcribe_audio(request):
+    if "audio" not in request.files:
+        return jsonify({"error": "No audio file uploaded"}), 400
 
-    # Convert to correct sampling rate (if needed)
-    if sampling_rate != 16000:
-        resampler = torchaudio.transforms.Resample(orig_freq=sampling_rate, new_freq=16000)
-        speech_array = resampler(speech_array)
+    audio_file = request.files["audio"]
 
-    # Convert to expected input format (just use the first channel)
-    sample = {"array": speech_array[0].numpy(), "sampling_rate": 16000}
+    # Dynamically use the file extension based on the uploaded file
+    file_extension = audio_file.filename.rsplit(".", 1)[-1].lower()
+    mime_type = "audio/wav" if file_extension == "wav" else "audio/webm"  # Adjust for other audio types if needed
 
-    result = pipe(sample)
-    return result["text"]
+    # Save the file with its original extension
+    audio_path = os.path.join(UPLOAD_FOLDER, f"temp_audio.{file_extension}")
+    audio_file.save(audio_path)
+
+    try:
+        # Open the audio file as raw bytes (without decoding)
+        with open(audio_path, "rb") as f:
+            audio_bytes = f.read()
+
+        response = client.models.generate_content(
+        model='gemini-2.5-flash',
+        contents=[
+            'Transcribe only the speech from this audio clip',
+            types.Part.from_bytes(
+            data=audio_bytes,
+            mime_type='audio/mp3',
+            )
+        ]
+        )
+        return jsonify({"transcription": response.text})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    finally:
+        os.remove(audio_path)  # Clean up the uploaded file after processing
