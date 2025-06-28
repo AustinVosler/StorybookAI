@@ -31,6 +31,10 @@ if GEMINI_API_KEY == "MISSING":
 def home():
     return render_template('index.html')
 
+@app.route("/loading")
+def loading():
+    return render_template('loading.html')
+
 # Gemini API:
 def transcribe_audio():
     if "audio" not in request.files:
