@@ -38,7 +38,7 @@ def home():
 def loading():
     return render_template('loading.html')
 
-@app.route("/generate_story")
+@app.route("/generate")
 def generate():
     try:
         generate_story(1)
