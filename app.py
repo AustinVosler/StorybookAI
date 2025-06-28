@@ -55,7 +55,7 @@ def transcribe_audio_route():
 def check_status():
     # import random
     global is_generating
-    print("is generating ", is_generating)
+    # print("is generating ", is_generating)
     if not is_generating:
         return jsonify(status="done", result={"RAHH" : "rahhhhh"})
     return jsonify(status="pending")
