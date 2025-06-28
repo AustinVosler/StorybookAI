@@ -34,29 +34,29 @@
       "{{ url_for('static', filename='img/stars/star-sm.svg') }}"
     ];
 
-    const container = document.getElementById('star-animation');
+    const starAnimation = document.getElementById('star-animation');
 
     function spawnStar() {
-    if (!container.classList.contains('active')) return;
+        if (!starAnimation.classList.contains('active')) return;
 
-    const img = document.createElement('img');
-    img.src = starImages[Math.floor(Math.random() * starImages.length)];
-    img.className = 'star';
+        const img = document.createElement('img');
+        img.src = starImages[Math.floor(Math.random() * starImages.length)];
+        img.className = 'star';
 
-    const size = Math.random() * 30 + 10;
-    img.style.width = `${size}px`;
-    img.style.height = `${size}px`;
+        const size = Math.random() * 30 + 10;
+        img.style.width = `${size}px`;
+        img.style.height = `${size}px`;
 
-    img.style.top = `${Math.random() * 100}%`;
-    img.style.left = `${Math.random() * 100}%`;
+        img.style.top = `${Math.random() * 100}%`;
+        img.style.left = `${Math.random() * 100}%`;
 
-    container.appendChild(img);
+        starAnimation.appendChild(img);
 
-    setTimeout(() => container.removeChild(img), 2000); // match CSS animation duration
+        setTimeout(() => starAnimation.removeChild(img), 2000); // match CSS animation duration
     }
 
     setInterval(() => {
-    for (let i = 0; i < 10; i++) spawnStar(); // spawn multiple at once
+        for (let i = 0; i < 10; i++) spawnStar(); // spawn multiple at once
     }, 300); // adjust interval to control intensity
 
     const loadingLabel = document.querySelector("#loading-label");
@@ -68,4 +68,40 @@
     }
     loadingLabelLoop(1000);
     setTimeout(()=>{loadingLabel.style.opacity=1},500)
+
+    
+    function finish(result) {
+        // animate loading label out
+        loadingLabel.style.transition = "0.2s ease";
+        loadingLabel.style.transform = "scale(0%)";
+
+        // NOW do the star animation
+        starAnimation.style.transition = "1s ease";
+        starAnimation.style.filter = "brightness(200%) blur(10px)";
+
+        setTimeout(()=>{
+            window.location.replace("/reading")
+        },500)
+    }
+
+
+    async function checkStatus() {
+        console.log("CHECKING STATUS");
+        const res = await fetch('/status');
+        const json = await res.json();
+        if (json.status === "done") {
+            console.log("YYYYEEEEEEEESSSSSSSSSSSS");
+            finish(json.result);
+        } else {
+            console.log("nope...");
+            setTimeout(checkStatus, 200); // Retry again and again and again
+        }
+    }
+
+    function startAndWait() {
+        fetch('/start').then(() => {
+            checkStatus(); // start polling!!
+        });
+    }
+    startAndWait()
 </script>

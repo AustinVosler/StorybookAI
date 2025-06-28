@@ -33,11 +33,11 @@ def extract_pages(response_text):
     
     return pages, descriptions
 
-def generate_story(story_id):
+def generate_story(story_id, query):
     load_dotenv() 
     client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
-    query = "Tell me a story about a knight who goes on an adventure."
+    # query = "Tell me a story about a knight who goes on an adventure."
 
     story_prompt = f'''
     You are a Storyteller AI that helps write children's stories.
@@ -83,7 +83,6 @@ def generate_story(story_id):
     Do not include the page text in the image, I will add it after.
     If this is not the first image generated in the conversation, keep the style consistent with previous images.
     Be sure to actually include what is in the description of the image. Do not make things up or add new things.
-    Do NOT include ANY text in the image.
 
     The image must have an aspect ratio of 1:1 (square)
 
@@ -102,5 +101,7 @@ def generate_story(story_id):
             if part.text is not None:
                 print(part.text)
             elif part.inline_data is not None:
-                image = Image.open(BytesIO((part.inline_data.data)))
-                image.save(f'{story_id}{i}.png')
+                image = Image.open(BytesIO(part.inline_data.data))
+                image.save(f'{story_id}_{i}.png')
+                
+    return story_pages

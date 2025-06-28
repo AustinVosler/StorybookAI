@@ -40,29 +40,42 @@
         <div class="bg-gradient" id="button-gradient"></div>
         <div class="text-input-container">
           <label type="text">Tell me a story about</label>
-          <input type="text" placeholder="..." oninput="toggleButton(this)" />
-          <button class="submit-btn disabled" disabled onclick="gotoLoadingScreen()">➤</button>
+          <input type="text" placeholder="..." id="story-query" oninput="toggleButton(this)" />
+          <button class="submit-btn disabled" disabled onclick="textSendButtonPressed()">➤</button>
         </div>
         <div class="voice-input-container" style="display: none;">
-          <!-- <button class="mic-btn" onclick="startRecording()"><img
-              src="{{ url_for('static', filename='img/record.png') }}"></button> -->
-          <button class="mic-btn" id="mic-btn" onclick="startRecording()"><img
+          <button class="mic-btn" onclick="startRecording()"><img
               src="{{ url_for('static', filename='img/record.png') }}"></button>
-          <!-- <div class="hidden audio-label">-:--</div> -->
-          <div class="audio-label hidden">-:--</div>
+          <div class="hidden audio-label">-:--</div>
           <button class="submit-btn disabled hidden" disabled>➤</button>
         </div>
       </div>
-
-      <div id="transcription"></div>
 
       <p class="tagline">
         APP NAME™ takes your bedtime story ideas <br />
         and brings them to life using Google Gemini!
       </p>
     </div>
-    <div class="stars bottom-left"></div>
-    <div class="stars bottom-right"></div>
+    <div class="voice-input-container" style="display: none;">
+      <!-- <button class="mic-btn" onclick="startRecording()"><img
+              src="{{ url_for('static', filename='img/record.png') }}"></button> -->
+      <button class="mic-btn" id="mic-btn" onclick="startRecording()"><img
+          src="{{ url_for('static', filename='img/record.png') }}"></button>
+      <!-- <div class="hidden audio-label">-:--</div> -->
+      <div class="audio-label hidden">-:--</div>
+      <button class="submit-btn disabled hidden" disabled>➤</button>
+    </div>
+  </div>
+
+  <div id="transcription"></div>
+
+  <p class="tagline">
+    APP NAME™ takes your bedtime story ideas <br />
+    and brings them to life using Google Gemini!
+  </p>
+  </div>
+  <div class="stars bottom-left"></div>
+  <div class="stars bottom-right"></div>
   </div>
 </body>
 
@@ -190,6 +203,15 @@
       button.textContent = "Start"; // text content
       isRecording = false;
     }
+  }
+
+
+  function textSendButtonPressed() {
+    fetch('/generate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query: document.querySelector("#story-query").value })
+    });
   }
 
 
