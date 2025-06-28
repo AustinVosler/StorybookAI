@@ -58,6 +58,16 @@
   width: 100px;
 }
 
+.container.mic-mode.recording .story-input {
+  transition: 0.9s ease, width 0.3s ease-out;
+  width: 300px;
+}
+
+.container.mic-mode.transcription .story-input {
+  transition: 0.9s ease, width 0.3s ease-out;
+  width: 500px;
+}
+
 .story-input:has(input:focus) {
   transform: scale(102.5%);
 }
@@ -148,6 +158,10 @@
   font-size: 1.5rem;
 }
 
+#submit-btn-2 {
+  margin-left: 1rem;
+}
+
 .bg-gradient#button-gradient {
   background: radial-gradient(circle at 90% 50%, #ff004ca0, #503c7d);
   z-index: 7;
@@ -213,10 +227,20 @@
   scale: 70%;
 }
 
+.audio-label {
+  margin: 0.5rem;
+}
+
 .tagline {
   font-size: 1rem;
   margin-top: 2rem;
   line-height: 1.5;
+}
+
+#loading img {
+  width: 30px;
+  height: 30px;
+  margin: auto;
 }
 
 /* Decorative stars */
