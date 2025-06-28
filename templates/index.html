@@ -35,7 +35,9 @@
                     <button class="submit-btn disabled" disabled>➤</button>
                 </div>
                 <div class="voice-input-container" style="display: none;">
-                    <button class="mic-btn">🎙️</button>
+                    <button class="mic-btn" onclick="startRecording()"><img src="{{ url_for('static', filename='img/record.png') }}"></button>
+                    <div class="hidden audio-label">-:--</div>
+                    <button class="submit-btn disabled hidden" disabled>➤</button>
                 </div>
             </div>
 
@@ -99,4 +101,9 @@
   submitBtn.addEventListener('mouseleave', () => {
     storyInput.classList.remove('hovering-submit');
   });
+
+
+  function startRecording() {
+    document.querySelector("audio-label").classList.remove("hidden")
+  }
 </script>
