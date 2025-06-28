@@ -33,11 +33,11 @@ def extract_pages(response_text):
     
     return pages, descriptions
 
-def generate_story(story_id):
+def generate_story(story_id, query):
     load_dotenv() 
     client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
-    query = "Tell me a story about a knight who goes on an adventure."
+    # query = "Tell me a story about a knight who goes on an adventure."
 
     story_prompt = f'''
     You are a Storyteller AI that helps write children's stories.
@@ -102,5 +102,13 @@ def generate_story(story_id):
             if part.text is not None:
                 print(part.text)
             elif part.inline_data is not None:
-                image = Image.open(BytesIO((part.inline_data.data)))
-                image.save(f'{story_id}{i}.png')
+                import base64
+                try:
+                    if part.inline_data.mime_type.startswith("image/"):
+                        image_data = base64.b64decode(part.inline_data.data)
+                        image = Image.open(BytesIO(image_data))
+                        image.save(f'{story_id}{i}.png')
+                    else:
+                        print(f"Unexpected mime type: {part.inline_data.mime_type}")
+                except Exception as e:
+                    print(f"Failed to process image for page {i + 1}: {e}")

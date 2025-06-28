@@ -30,17 +30,34 @@ def home():
 def loading():
     return render_template('loading.html')
 
-@app.route("/generate")
+@app.route("/generate", methods=['POST'])
 def generate():
+    print("DJSFKLSDLKFDKLFJKSLDJFSLKDJFSLKJFLJFKLDSFJLKF")
     try:
-        generate_story(1)
+        data = request.get_json()
+        print("working query: ",data["query"])
+        generate_story(1, data["query"])
         return jsonify({"message": "Story generated successfully!"}), 200
     except Exception as e:
+        print("EXCEPTPTTTTION",e)
         return jsonify({"error": str(e)}), 500
 
 @app.route("/transcribe", methods=["POST"])
 def transcribe_audio_route():
     return transcribe_audio(request)
+
+
+@app.route('/start')
+def start():
+    print("RAHHH!!!!!!!")
+    return "Started"
+
+@app.route('/status')
+def check_status():
+    import random
+    if random.random() < 0.05:
+        return jsonify(status="done", result={"RAHH" : "rahhhhh"})
+    return jsonify(status="pending")
 
 if __name__ == "__main__":
     app.run(debug=True)
