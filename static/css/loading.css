@@ -37,6 +37,9 @@ html, body {
 
 .text {
     margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 #loading-label {
@@ -59,4 +62,9 @@ html, body {
   position: absolute;
   opacity: 0;
   filter: blur(50px);
+}
+
+
+#main-loading-tip {
+  
 }
