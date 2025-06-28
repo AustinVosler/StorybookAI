@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, jsonify
-from transcriber import transcribe
+# from transcriber import transcribe
 import os
-from werkzeug.utils import secure_filename
+# from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 UPLOAD_FOLDER = "uploads"
