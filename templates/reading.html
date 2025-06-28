@@ -20,9 +20,62 @@
         </div>
 
         <div class="container">
-            
+            <img src="{{ url_for('static', filename='img/book.svg') }}">
         </div>
 
     </div>
 </body>
 </html>
+
+<script>
+const sky = document.querySelector('.sky-animation');
+
+function spawnShiningStar() {
+    const starImages = [
+        "{{ url_for('static', filename='img/stars/star-lg.svg') }}",
+        "{{ url_for('static', filename='img/stars/star-md.svg') }}",
+        "{{ url_for('static', filename='img/stars/star-sm.svg') }}"
+    ];
+
+    const sky = document.querySelector('.sky-animation');
+    const img = document.createElement('img');
+    img.src = starImages[Math.floor(Math.random() * starImages.length)];
+    img.className = 'star';
+
+    const left = Math.random() * 100;
+    const top = Math.random() * 20;
+
+    img.style.left = `${left}%`;
+    img.style.top = `${top}%`;
+    img.style.position = 'absolute';
+    const size = (Math.random()*20)+5
+    img.style.width = size + 'px';
+    img.style.height = size + 'px';
+
+    const duration = ((Math.random()*6)+12)
+
+    img.style.animation = 'flicker ' + duration  + "s ease-in-out forwards";
+
+    sky.appendChild(img);
+
+    setTimeout(() => {
+        sky.removeChild(img);
+    }, duration*1000);
+}
+
+// Optionally repeat new stars occasionally
+setInterval(() => {
+    for (let i = 0; i < 1; i++) {
+        spawnShiningStar();
+    }
+}, 400);
+</script>
+
+
+<!-- THE MAIN SCRIPT!!! -->
+
+<script>
+
+    
+
+</script>
