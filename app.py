@@ -155,5 +155,18 @@ def transcribe_audio():
 #     finally:
 #         os.remove(filepath)  # Clean up uploaded file
 
+
+@app.route('/start')
+def start():
+    print("RAHHH!!!!!!!")
+    return "Started"
+
+@app.route('/status')
+def check_status():
+    import random
+    if random.random() < 0.05:
+        return jsonify(status="done", result={"RAHH" : "rahhhhh"})
+    return jsonify(status="pending")
+
 if __name__ == "__main__":
     app.run(debug=True)
