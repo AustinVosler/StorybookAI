@@ -36,12 +36,16 @@ def home():
 def loading():
     return render_template('loading.html')
 
-@app.route("/generate")
+@app.route("/generate", methods=['POST'])
 def generate():
+    print("DJSFKLSDLKFDKLFJKSLDJFSLKDJFSLKJFLJFKLDSFJLKF")
     try:
-        generate_story(1)
+        data = request.get_json()
+        print("working query: ",data["query"])
+        generate_story(1, data["query"])
         return jsonify({"message": "Story generated successfully!"}), 200
     except Exception as e:
+        print("EXCEPTPTTTTION",e)
         return jsonify({"error": str(e)}), 500
 
 # Gemini API:
