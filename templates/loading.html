@@ -137,17 +137,19 @@
     setTimeout(() => { loadingLabel.style.opacity = 1 }, 500)
 
     function finish(result) {
-        // animate loading label out
-        loadingLabel.style.transition = "0.2s ease";
-        loadingLabel.style.transform = "scale(0%)";
+        setTimeout(()=>{
+            // animate loading label out
+            loadingLabel.style.transition = "0.2s ease";
+            loadingLabel.style.transform = "scale(0%)";
 
-        // NOW do the star animation
-        starAnimation.style.transition = "1s ease";
-        starAnimation.style.filter = "brightness(200%) blur(10px)";
+            // NOW do the star animation
+            starAnimation.style.transition = "1s ease";
+            starAnimation.style.filter = "brightness(200%) blur(10px)";
 
-        setTimeout(() => {
-            window.location.replace("/reading")
-        }, 500)
+            setTimeout(() => {
+                window.location.replace("/reading")
+            }, 1500)
+        },500)
     }
 
 
@@ -164,5 +166,54 @@
         }
     }
     checkStatus();
+</script>
+
+<script>
+    const loadingTips = [
+        "Austin needs to do these",
+        "This is a loading tip",
+        "Austin needs to write these"
+    ]
+
+    const loadingTip = document.getElementById("main-loading-tip");
+
+    function showLoadingTips() {
+        console.log("SHOWING LOADING TIPS")
+        // Fisher–Yates shuffle a copy of the tips array
+        const tips = loadingTips.slice();
+        for (let i = tips.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [tips[i], tips[j]] = [tips[j], tips[i]];
+        }
+        // Display the first shuffled tip
+        const tipElement = document.getElementById('main-loading-tip');
+        if (tipElement) {
+            tipElement.textContent = tips[0];
+        }
+
+        var currentTip = 0;
+        setInterval(()=>{
+            console.log("interval")
+            showTip(loadingTips[currentTip])
+            currentTip++;
+            if (currentTip>=loadingTips.length) {currentTip=0};
+        },2500);
+
+    }
+
+    function showTip(tip) {
+        console.log("showing tip " + tip)
+        loadingTip.style.transition = "0.5s ease-in";
+        loadingTip.style.opacity = 0;
+        loadingTip.style.transform = "scale(70%)";
+        setTimeout(()=>{
+            loadingTip.style.transition = "0.5s ease-out";
+            loadingTip.textContent = tip
+            loadingTip.style.transform = "scale(100%)";
+            loadingTip.style.opacity = 1
+        },500);
+    }
+
+    showLoadingTips();
 
 </script>

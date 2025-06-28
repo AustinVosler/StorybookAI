@@ -42,6 +42,8 @@
 
             <!-- <input type="text" class="textbox" placeholder="Enter your text here"> -->
 
+            <div id="page-text" class="page-text">Loading text...</div>
+
             <button id="play-button" onclick="playAudio()">Play</button>
 
             <audio id="audio-player" src="static/audio/1_1.wav"></audio>
@@ -100,14 +102,37 @@
 
     document.addEventListener('DOMContentLoaded', updateImageAndAudio);
 
+    let pageTexts = [];  // global array to hold texts from file
+
+    // Fetch texts.txt and parse lines into pageTexts array
+    fetch('static/texts.txt')
+        .then(response => response.text())
+        .then(text => {
+            pageTexts = text.trim().split('\n');
+            // Initialize display after loading texts
+            updateImageAndAudio();
+        })
+        .catch(err => {
+            console.error('Failed to load texts.txt:', err);
+            document.getElementById('page-text').textContent = "Failed to load text.";
+        });
+
     function updateImageAndAudio() {
         const image = document.getElementById('main-image');
         const audio = document.getElementById('audio-player');
         const leftArrow = document.getElementById('left-arrow');
         const rightArrow = document.getElementById('right-arrow');
+        const textDisplay = document.getElementById('page-text');
 
         image.src = `static/images/1_${imageIndex}.png`;
         audio.src = `static/audio/1_${imageIndex}.wav`;
+
+        // Use the loaded pageTexts array
+        if (pageTexts.length >= imageIndex) {
+            textDisplay.textContent = pageTexts[imageIndex - 1];
+        } else {
+            textDisplay.textContent = "No text available.";
+        }
 
         // Show/hide arrows based on current image index
         leftArrow.style.visibility = (imageIndex === minIndex) ? 'hidden' : 'visible';

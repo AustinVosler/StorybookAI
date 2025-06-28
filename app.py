@@ -63,6 +63,8 @@ def generate():
         page_texts = generate_story(1, data["query"])
         generate_tts(1, page_texts)
         is_generating = False
+        with open("static/texts.txt", "w", encoding="utf-8") as f:
+            f.write("\n".join(page_texts))
         return jsonify({"message": "Story generated successfully!", "page_texts": page_texts}), 200
     except Exception as e:
         is_generating = False
@@ -88,6 +90,7 @@ def check_status():
     if not is_generating:
         return jsonify(status="done", result={"image_count": image_count})
     return jsonify(status="pending", result={"image_count": image_count})
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5001, debug=False)
