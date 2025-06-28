@@ -79,7 +79,7 @@ image_prompt ='''
 Generate aN image of the following page text and description.
 This is for a children's book illustration, so it should be colorful and engaging.
 Make the style watercolor, with a whimsical and playful feel.
-Do not include any text in the image.
+Do not include the page text in the image, I will add it after.
 If this is not the first image generated in the conversation, keep the style consistent with previous images.
 Be sure to actually include what is in the description of the image. Do not make things up or add new things.
 Do NOT include ANY text in the image.
