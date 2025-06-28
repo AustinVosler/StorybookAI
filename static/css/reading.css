@@ -14,3 +14,25 @@
         opacity: 1;
     }
 }
+
+.star {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    opacity: 0;
+    animation: flicker 8s ease-in-out forwards;
+}
+
+@keyframes flicker {
+    0% { opacity: 0; transform: scale(1); }
+    10% { opacity: 0.6; }
+    20% { opacity: 1; }
+    30% { opacity: 0.8; }
+    40% { opacity: 1; }
+    50% { opacity: 0.9; }
+    60% { opacity: 1; }
+    70% { opacity: 0.7; }
+    80% { opacity: 1; }
+    100% { opacity: 0; transform: scale(1.5); }
+}

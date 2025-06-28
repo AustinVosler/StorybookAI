@@ -36,28 +36,36 @@
 
     const starAnimation = document.getElementById('star-animation');
 
-    function spawnStar() {
-        if (!starAnimation.classList.contains('active')) return;
-
+    function spawnShiningStar() {
         const img = document.createElement('img');
         img.src = starImages[Math.floor(Math.random() * starImages.length)];
         img.className = 'star';
 
-        const size = Math.random() * 30 + 10;
-        img.style.width = `${size}px`;
-        img.style.height = `${size}px`;
+        const left = Math.random() * 100;
+        const top = Math.random() * 10;
 
-        img.style.top = `${Math.random() * 100}%`;
-        img.style.left = `${Math.random() * 100}%`;
+        img.style.left = `${left}%`;
+        img.style.top = `${top}%`;
+        img.style.position = 'absolute';
+        img.style.width = '20px';
+        img.style.height = '20px';
 
         starAnimation.appendChild(img);
 
-        setTimeout(() => starAnimation.removeChild(img), 2000); // match CSS animation duration
+        setTimeout(() => {
+            starAnimation.removeChild(img);
+        }, 8000);
     }
 
+    // Start with a few
+    for (let i = 0; i < 3; i++) {
+        setTimeout(spawnShiningStar, i * 1500);
+    }
+
+    // Occasionally spawn more
     setInterval(() => {
-        for (let i = 0; i < 10; i++) spawnStar(); // spawn multiple at once
-    }, 300); // adjust interval to control intensity
+        spawnShiningStar();
+    }, 12000);
 
     const loadingLabel = document.querySelector("#loading-label");
     function loadingLabelLoop(time) {
