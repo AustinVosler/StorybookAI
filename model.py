@@ -8,6 +8,8 @@ from google.genai import types
 from PIL import Image
 from io import BytesIO
 
+def do_nothing():
+    x = 1 + 2
 
 def extract_pages(response_text):
     pages = []
@@ -96,11 +98,9 @@ def generate_story(story_id, query):
         response = chat.send_message(
             image_prompt.format(current_page=page, current_desc=desc),
         )
-
         for part in response.candidates[0].content.parts:
             if part.text is not None:
-                # print(part.text)
-                pass
+                do_nothing()
             elif part.inline_data is not None:
                 print("MIME type:", part.inline_data.mime_type)
                 print("Data preview:", part.inline_data.data[:20])

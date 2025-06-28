@@ -47,27 +47,20 @@
           <button class="mic-btn" onclick="startRecording()"><img
               src="{{ url_for('static', filename='img/record.png') }}"></button>
           <div class="hidden audio-label">-:--</div>
-          <button class="submit-btn disabled hidden" disabled>➤</button>
+          <canvas id="waveform" width="0" height="60" style="background-color: transparent;"></canvas>
+          <div id="loading" class="hidden"><img src="{{ url_for('static', filename='img/buffering.gif') }}"></div>
+          <div id="transcription"></div>
+          <button id="submit-btn-2" class="submit-btn disabled hidden">➤</button>
         </div>
       </div>
+
 
       <p class="tagline">
         APP NAME™ takes your bedtime story ideas <br />
         and brings them to life using Google Gemini!
       </p>
     </div>
-    <div class="voice-input-container" style="display: none;">
-      <!-- <button class="mic-btn" onclick="startRecording()"><img
-              src="{{ url_for('static', filename='img/record.png') }}"></button> -->
-      <button class="mic-btn" id="mic-btn" onclick="startRecording()"><img
-          src="{{ url_for('static', filename='img/record.png') }}"></button>
-      <!-- <div class="hidden audio-label">-:--</div> -->
-      <div class="audio-label hidden">-:--</div>
-      <button class="submit-btn disabled hidden" disabled>➤</button>
-    </div>
   </div>
-
-  <div id="transcription"></div>
 
   <p class="tagline">
     APP NAME™ takes your bedtime story ideas <br />
@@ -88,9 +81,14 @@
   let stream;
 
   function focusInput(e) {
-    // Only focus if the clicked element is NOT the button!
+    const container = document.querySelector('.container');
     if (!e.target.closest('button')) {
-      e.currentTarget.querySelector('input').focus();
+      if (container.classList.contains('mic-mode')) {
+        const micBtn = document.querySelector('.mic-btn');
+        if (micBtn) micBtn.click();
+      } else {
+        e.currentTarget.querySelector('input').focus();
+      }
     }
   }
   function toggleButton(input) {
@@ -136,28 +134,91 @@
     storyInput.classList.remove('hovering-submit');
   });
 
+var transcribed = false;
 
   async function startRecording() {
-    // document.querySelector("audio-label").classList.remove("hidden")
-    // document.querySelector(".audio-label").classList.remove("hidden");
 
-
-    // const button = document.getElementById("mic-btn");
-    // const label = document.getElementById("audio-label");
-    // const transcriptionOutput = document.getElementById("transcription");
+    if(transcribed) {
+        return
+    }
 
     console.log("Button clicked!");
 
-    const button = document.getElementById("mic-btn");
+    const button = document.querySelector(".mic-btn");
     const label = document.querySelector(".audio-label");
     const transcriptionOutput = document.getElementById("transcription");
+    const canvas = document.getElementById("waveform");
 
-    label.classList.remove("hidden");
+    canvas.transition = "0.5s";
+    canvas.width = 200
+
+    document.querySelector('.container').classList.toggle('recording', true);
+
+    button.childNodes[0].src = "{{ url_for('static', filename='img/stop.png') }}"
 
     if (!isRecording) {
+      label.classList.remove("hidden");
+      let startTime = Date.now();
+      const updateTimer = () => {
+        
+        requestAnimationFrame(updateTimer);
+      };
+      updateTimer();
+
       // Start recording
       try {
         stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+
+        const ctx = canvas.getContext("2d");
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        const source = audioContext.createMediaStreamSource(stream);
+        const analyser = audioContext.createAnalyser();
+        source.connect(analyser);
+        analyser.fftSize = 2048;
+        const bufferLength = analyser.fftSize;
+        const dataArray = new Uint8Array(bufferLength);
+
+        function drawWaveform() {
+          requestAnimationFrame(drawWaveform);
+
+            // Adding the duration label here
+            if (!isRecording) return;
+            const elapsed = Math.floor((Date.now() - startTime) / 1000);
+            const minutes = String(Math.floor(elapsed / 60)).padStart(1, '0');
+            const seconds = String(elapsed % 60).padStart(2, '0');
+            label.textContent = `${minutes}:${seconds}`;
+
+          analyser.getByteTimeDomainData(dataArray);
+
+          ctx.fillStyle = "transparent";
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+          ctx.lineWidth = 2;
+          ctx.strokeStyle = "white";
+
+          ctx.beginPath();
+          const sliceWidth = canvas.width * 1.0 / bufferLength;
+          let x = 0;
+
+          for (let i = 0; i < bufferLength; i++) {
+            const v = dataArray[i] / 128.0;
+            const y = v * canvas.height / 2;
+
+            if (i === 0) {
+              ctx.moveTo(x, y);
+            } else {
+              ctx.lineTo(x, y);
+            }
+
+            x += sliceWidth;
+          }
+
+          ctx.lineTo(canvas.width, canvas.height / 2);
+          ctx.stroke();
+        }
+
+        drawWaveform();
+
         mediaRecorder = new MediaRecorder(stream);
 
         audioChunks = [];
@@ -178,17 +239,19 @@
             });
 
             const data = await response.json();
-            transcriptionOutput.textContent = data.transcription || data.error || "No transcription.";
+
+            showTranscription(data.transcription)
           } catch (err) {
             transcriptionOutput.textContent = "Error: " + err.message;
           }
 
           stream.getTracks().forEach(track => track.stop()); // Clean up stream
+          audioContext.close();
         };
 
         mediaRecorder.start();
         label.classList.remove("hidden");
-        button.textContent = "Stop"; // text content
+        // button.textContent = "Stop"; // text content
         isRecording = true;
 
       } catch (err) {
@@ -199,10 +262,37 @@
     } else {
       // Stop recording
       mediaRecorder.stop();
-      label.classList.add("hidden");
-      button.textContent = "Start"; // text content
+    //   button.textContent = "Start"; // text content
+        button.style.display = "none"
+        canvas.style.display = "none"
+        document.querySelector('.container').classList.toggle('recording', false);
+        
       isRecording = false;
+
+      finishedRecording();
     }
+  }
+
+  function finishedRecording() {
+    const loadingGIF = document.querySelector("#loading");
+    loadingGIF.classList.remove("hidden");
+    transcribed = true;
+  }
+
+  function showTranscription(transcription) {
+    const transcriptionOutput = document.getElementById("transcription");
+    transcriptionOutput.textContent = transcription
+
+    const loadingGIF = document.querySelector("#loading");
+    loadingGIF.classList.add("hidden");
+    const label = document.querySelector(".audio-label");
+    label.classList.add("hidden");
+
+    document.querySelector('.container').classList.toggle('transcription', true);
+
+    const submitBtn = document.querySelector("#submit-btn-2");
+    submitBtn.classList.remove("hidden");
+    submitBtn.classList.remove("disabled");
   }
 
 

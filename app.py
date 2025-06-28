@@ -1,16 +1,9 @@
 from flask import Flask, render_template, request, jsonify
 import os
-import base64
-import requests
 from dotenv import load_dotenv
-from google.genai import types
 from model import generate_story
 from transcriber import transcribe_audio
-from google import genai
-from pathlib import Path
 from tts import generate_tts
-# from transcriber import transcribe
-# from werkzeug.utils import secure_filename
 
 load_dotenv()
 
