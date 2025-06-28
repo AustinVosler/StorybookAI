@@ -105,9 +105,8 @@ def generate_story(story_id, query):
                 import base64
                 try:
                     if part.inline_data.mime_type.startswith("image/"):
-                        image_data = base64.b64decode(part.inline_data.data)
-                        image = Image.open(BytesIO(image_data))
-                        image.save(f'{story_id}{i}.png')
+                        image = Image.open(BytesIO(part.inline_data.data))
+                        image.save(f'{story_id}_{i}.png')
                     else:
                         print(f"Unexpected mime type: {part.inline_data.mime_type}")
                 except Exception as e:
