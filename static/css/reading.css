@@ -1,0 +1,16 @@
+.sky-animation {
+    height: 40vh;
+    width: 100vw;
+    background: linear-gradient(rgba(0,0,0,0.75), transparent);
+    opacity: 0;
+    animation: fade-in 2s forwards;
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
