@@ -27,15 +27,21 @@ def loading():
 def reading():
     return render_template('reading.html')
 
+is_generating = False
+
 @app.route("/generate", methods=['POST'])
 def generate():
+    global is_generating
     try:
+        is_generating = True
         data = request.get_json()
         print("working query: ",data["query"])
         page_texts = generate_story(1, data["query"])
         generate_tts(1, page_texts)
+        is_generating = False
         return jsonify({"message": "Story generated successfully!", "page_texts": page_texts}), 200
     except Exception as e:
+        is_generating = False
         print("EXCEPTPTTTTION",e)
         return jsonify({"error": str(e)}), 500
 
@@ -43,15 +49,12 @@ def generate():
 def transcribe_audio_route():
     return transcribe_audio(request)
 
-@app.route('/start')
-def start():
-    print("RAHHH!!!!!!!")
-    return "Started"
-
 @app.route('/status')
 def check_status():
-    import random
-    if random.random() < 0.0:
+    # import random
+    global is_generating
+    print("is generating ", is_generating)
+    if not is_generating:
         return jsonify(status="done", result={"RAHH" : "rahhhhh"})
     return jsonify(status="pending")
 
