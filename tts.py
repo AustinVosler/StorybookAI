@@ -41,12 +41,10 @@ def generate_tts(story_id, pages):
     load_dotenv() 
     client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
-    # Use ThreadPoolExecutor for true parallel execution
     with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
         futures = []
         for i, page in enumerate(pages):
             future = executor.submit(generate_single_tts, client, story_id, page, i+1)
             futures.append(future)
         
-        # Wait for all tasks to complete
         concurrent.futures.wait(futures)

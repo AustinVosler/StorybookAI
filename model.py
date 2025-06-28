@@ -102,7 +102,10 @@ def generate_story(story_id, query):
             if part.text is not None:
                 do_nothing()
             elif part.inline_data is not None:
+                print("MIME type:", part.inline_data.mime_type)
+                print("Data preview:", part.inline_data.data[:20])
                 image = Image.open(BytesIO(part.inline_data.data))
+                image.load()
                 image.save(f'{story_id}_{i+1}.png')
                 print(f"image {i+1} saved")
                 
