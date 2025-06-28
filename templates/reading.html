@@ -105,7 +105,7 @@
     let pageTexts = [];  // global array to hold texts from file
 
     // Fetch texts.txt and parse lines into pageTexts array
-    fetch('static/text.txt')
+    fetch('static/texts.txt')
         .then(response => response.text())
         .then(text => {
             pageTexts = text.trim().split('\n');
