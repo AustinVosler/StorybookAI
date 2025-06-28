@@ -40,7 +40,23 @@ html, body {
 }
 
 #loading-label {
+  font-size: 4rem !important;
     z-index: 1000;
     opacity: 0;
     transition: 5s ease;
+}
+
+/* Gradient overlays */
+#gradient-container {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+.gradient {
+  position: absolute;
+  opacity: 0;
+  filter: blur(50px);
 }

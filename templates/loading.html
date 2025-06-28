@@ -17,12 +17,14 @@
     <div class="background">
         <div id="star-animation" class="active"></div>
 
+        <div id="gradients"></div>
+
         <div class="container">
             <div class="text">
                 <p style="font-size: 2rem" id="loading-label">Loading...</p>
             </div>
         </div>
-
+        <div id="gradient-container"></div>
     </div>
 </body>
 </html>
@@ -59,6 +61,67 @@
         for (let i = 0; i < 10; i++) spawnStar(); // spawn multiple at once
     }, 300); // adjust interval to control intensity
 
+    // --- Gradient spawn configuration ---
+    const gradientConfig = {
+      count: 5,
+      colors: ['#FF6B6B', '#6BCB77', '#4D96FF', '#FFD93D', '#A66DD4'],
+      minSize: 400,       // px
+      maxSize: 1000,       // px
+      minLifetime: 8000,   // ms
+      maxLifetime: 10000,   // ms
+      minSpeed: 0.1,      // multiplier for movement distance
+      maxSpeed: 0.6,      // multiplier for movement distance
+      spawnInterval: 500,// ms
+      avoidRadius: 0    // px from center
+    };
+
+    const gradientContainer = document.getElementById('gradient-container');
+
+    function spawnGradient() {
+      const lifetime = Math.random() * (gradientConfig.maxLifetime - gradientConfig.minLifetime) + gradientConfig.minLifetime;
+      const speed = Math.random() * 0.1 * (gradientConfig.maxSpeed - gradientConfig.minSpeed) + gradientConfig.minSpeed;
+      // pick a random color
+      const color = gradientConfig.colors[Math.floor(Math.random() * gradientConfig.colors.length)];
+      const grad = document.createElement('div');
+      grad.className = 'gradient';
+      // random size
+      const width = Math.random() * (gradientConfig.maxSize - gradientConfig.minSize) + gradientConfig.minSize;
+      const height = Math.random() * (gradientConfig.maxSize - gradientConfig.minSize) + gradientConfig.minSize;
+      grad.style.width = `${width}px`;
+      grad.style.height = `${height}px`;
+      // set a radial gradient background
+      grad.style.background = `radial-gradient(circle at center, ${color} 0%, transparent 70%)`;
+      // random shape: circle or ellipse
+      if (Math.random() < 0.5) {
+        grad.style.borderRadius = '50%';
+      } else {
+        grad.style.borderRadius = `${50 + Math.random() * 50}% / ${30 + Math.random() * 30}%`;
+      }
+      // initial position on edge, avoiding center
+      const angle = Math.random() * 2 * Math.PI;
+      const radius = Math.hypot(window.innerWidth, window.innerHeight) / 2;
+      const x0 = window.innerWidth / 2 + Math.cos(angle) * radius;
+      const y0 = window.innerHeight / 2 + Math.sin(angle) * radius;
+      grad.style.left = `${x0 - width / 2}px`;
+      grad.style.top = `${y0 - height / 2}px`;
+      gradientContainer.appendChild(grad);
+      // movement: perpendicular path around center
+      const moveAngle = angle + (Math.random() < 0.5 ? Math.PI / 2 : -Math.PI / 2);
+      const x1 = window.innerWidth / 2 + Math.cos(moveAngle) * radius;
+      const y1 = window.innerHeight / 2 + Math.sin(moveAngle) * radius;
+      grad.animate([
+        { opacity: 0, transform: 'translate(0,0)' },
+        { opacity: 1, transform: 'translate(0,0)' },
+        { opacity: 0, transform: `translate(${(x1 - x0) * speed}px, ${(y1 - y0) * speed}px)` }
+      ], {
+        duration: lifetime,
+        easing: 'ease-in-out'
+      }).onfinish = () => grad.remove();
+    }
+
+    // begin spawning gradients at the configured interval
+    setInterval(spawnGradient, gradientConfig.spawnInterval);
+
     const loadingLabel = document.querySelector("#loading-label");
     function loadingLabelLoop(time) {
         loadingLabel.textContent = "Loading."
@@ -66,7 +129,7 @@
         setTimeout(()=>{loadingLabel.textContent = "Loading..."}, 2*(time/3))
         setTimeout(()=>{loadingLabelLoop(time)}, time)
     }
-    loadingLabelLoop(1000);
+    loadingLabelLoop(2000);
     setTimeout(()=>{loadingLabel.style.opacity=1},500)
 
     
