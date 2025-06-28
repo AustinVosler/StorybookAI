@@ -4,6 +4,7 @@ import base64
 import requests
 from dotenv import load_dotenv
 from google.genai import types
+from model import generate_story
 
 # from transcriber import transcribe
 # from werkzeug.utils import secure_filename
@@ -34,6 +35,14 @@ def home():
 @app.route("/loading")
 def loading():
     return render_template('loading.html')
+
+@app.route("/generate_story")
+def generate():
+    try:
+        generate_story(1)
+        return jsonify({"message": "Story generated successfully!"}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 # Gemini API:
 def transcribe_audio():
