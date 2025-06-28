@@ -1,0 +1,7 @@
+body {
+  margin: 0;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  color: white;
+  background: linear-gradient(to bottom, #2a004f, #15002b);
+  overflow: hidden;
+}
