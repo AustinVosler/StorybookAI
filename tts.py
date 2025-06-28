@@ -34,6 +34,7 @@ def generate_single_tts(client, story_id, page_text, page_num):
     data = response.candidates[0].content.parts[0].inline_data.data
     os.makedirs("static/audio", exist_ok=True)
     file_name = f'static/audio/{story_id}_{page_num}.wav'
+    print(data[:30])
     wave_file(file_name, data)
     print(f"tts saved for page {page_num}")
 
