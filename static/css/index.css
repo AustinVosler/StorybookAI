@@ -32,16 +32,21 @@
 }
 
 .story-input {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
   background: radial-gradient(#5E4597, #5E4597);
   border-radius: 50px;
   padding: 1.5rem 2rem;
   margin-bottom: 1rem;
   margin-left: auto;
   margin-right: auto;
-  box-shadow: inset 0 -5px 22.5px 0px black, 0px 4px 6.4px #00000077;
+  box-shadow:
+    inset 0 -5px 22.5px 0px black,
+    0px 4px 6.4px #00000077;
+  transition: box-shadow 0.5s ease;
 }
 
 .container.text-mode .story-input {
@@ -53,15 +58,16 @@
   width: 200px;
 }
 
-.story-input:hover {
-  transition: 0.2s ease;
-  transform: scale(105%);
-  background: radial-gradient(#7455bb, #7455bb)
+.story-input:has(input:focus) {
+  transform: scale(102.5%);
 }
 
-.story-input:has(input:focus) {
-  /* background: #9455bb; */
-  background: radial-gradient(#9455bb, #7455bb)
+.story-input:hover {
+  transition: 0.2s ease;
+  transform: scale(105%) !important;
+  box-shadow:
+    inset 0 -5px 22.5px 0px black,
+    0px 4px 6.4px #00000077;
 }
 
 .story-input label {
@@ -71,6 +77,46 @@
 .text-input-container {
   display: flex;
   align-items: center;
+}
+
+.bg-gradient {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.bg-gradient#highlight-gradient {
+  background: radial-gradient(#7455bb, #7455bb);
+  z-index: 1;
+}
+.story-input:hover .bg-gradient#highlight-gradient {
+  opacity: 1;
+}
+
+.bg-gradient#textinput-gradient {
+  background: radial-gradient(#b656bc, #7455bb);
+  z-index: 5;
+}
+.story-input:has(input:focus) .bg-gradient#textinput-gradient {
+  opacity: 1;
+}
+
+.bg-gradient#sending-gradient {
+  background: radial-gradient(circle at 90% 50%, #e31791, #7455bb);
+  z-index: 5;
+  transition: 0.5s ease;
+}
+.story-input:has(input:not(:placeholder-shown)) .bg-gradient#sending-gradient {
+  opacity: 1;
+  transition: 5s ease;
+}
+
+.story-input .text-input-container, .story-input .voice-input-container {
+  z-index: 1000;
 }
 
 .story-input input {
@@ -100,6 +146,16 @@
   border: none;
   color: #909090;
   font-size: 1.5rem;
+}
+
+.bg-gradient#button-gradient {
+  background: radial-gradient(circle at 90% 50%, #ff004ca0, #503c7d);
+  z-index: 7;
+  transition: 1s ease;
+}
+.story-input.hovering-submit .bg-gradient#button-gradient {
+  opacity: 1;
+  transition: 0.4s ease;
 }
 
 .submit-btn:not(.disabled) {

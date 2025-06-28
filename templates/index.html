@@ -25,6 +25,10 @@
             </div>
 
             <div class="story-input" onclick="focusInput(event)">
+                <div class="bg-gradient" id="highlight-gradient"></div>
+                <div class="bg-gradient" id="textinput-gradient"></div>
+                <div class="bg-gradient" id="sending-gradient"></div>
+                <div class="bg-gradient" id="button-gradient"></div>
                 <div class="text-input-container">
                     <label type="text">Tell me a story about</label>
                     <input type="text" placeholder="..." oninput="toggleButton(this)" />
@@ -69,6 +73,12 @@
     document.querySelector('.voice-input-container').style.display = isTextMode ? 'none' : 'flex';
     document.querySelector('.container').classList.toggle('text-mode', isTextMode);
     document.querySelector('.container').classList.toggle('mic-mode', !isTextMode);
+
+    if(!isTextMode) {
+        const input = document.querySelector('.text-input-container input');
+        input.value = '';
+        toggleButton(input); // re-disable button
+    }
   }
 
   // Attach event listeners after DOM loads
@@ -77,4 +87,16 @@
       btn.addEventListener('click', () => toggleInputMode(btn));
     });
   };
+
+  const submitBtn = document.querySelector('.submit-btn');
+  const storyInput = document.querySelector('.story-input');
+
+  submitBtn.addEventListener('mouseenter', () => {
+    if (!submitBtn.classList.contains('disabled')) {
+      storyInput.classList.add('hovering-submit');
+    }
+  });
+  submitBtn.addEventListener('mouseleave', () => {
+    storyInput.classList.remove('hovering-submit');
+  });
 </script>
