@@ -5,3 +5,11 @@ body {
   background: linear-gradient(to bottom, #2a004f, #15002b);
   overflow: hidden;
 }
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
