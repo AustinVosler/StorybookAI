@@ -35,12 +35,11 @@ def reading():
 
 @app.route("/generate", methods=['POST'])
 def generate():
-    print("DJSFKLSDLKFDKLFJKSLDJFSLKDJFSLKJFLJFKLDSFJLKF")
     try:
         data = request.get_json()
         print("working query: ",data["query"])
-        generate_story(1, data["query"])
-        return jsonify({"message": "Story generated successfully!"}), 200
+        page_texts = generate_story(1, data["query"])
+        return jsonify({"message": "Story generated successfully!", "page_texts": page_texts}), 200
     except Exception as e:
         print("EXCEPTPTTTTION",e)
         return jsonify({"error": str(e)}), 500
