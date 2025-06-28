@@ -308,6 +308,7 @@
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ query: isTextMode ? document.querySelector("#story-query").value : document.querySelector("#transcription").textContent })
     });
+    window.location.replace("/loading")
   }
 
 
