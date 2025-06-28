@@ -162,11 +162,6 @@
             setTimeout(checkStatus, 200); // Retry again and again and again
         }
     }
+    checkStatus();
 
-    function startAndWait() {
-        fetch('/start').then(() => {
-            checkStatus(); // start polling!!
-        });
-    }
-    startAndWait()
 </script>
