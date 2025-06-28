@@ -109,3 +109,11 @@
     font-size: 1rem;
     cursor: pointer;
 }
+
+.page-text {
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+    text-align: center;
+    width: 60%;
+    min-height: 3em;
+}

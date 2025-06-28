@@ -41,6 +41,8 @@ def generate():
         page_texts = generate_story(1, data["query"])
         generate_tts(1, page_texts)
         is_generating = False
+        with open("static/texts.txt", "w", encoding="utf-8") as f:
+            f.write("\n".join(page_texts))
         return jsonify({"message": "Story generated successfully!", "page_texts": page_texts}), 200
     except Exception as e:
         is_generating = False
