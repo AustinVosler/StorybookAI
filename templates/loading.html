@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>APP NAME</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/loading.css') }}">
     <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}"> -->
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,7 +15,57 @@
 <body>
     <img id="bg-img" src="{{ url_for('static', filename='img/background-vector.svg') }}">
     <div class="background">
-        
+        <div id="star-animation" class="active"></div>
+
+        <div class="container">
+            <div class="text">
+                <p style="font-size: 2rem" id="loading-label">Loading...</p>
+            </div>
+        </div>
+
     </div>
 </body>
 </html>
+
+<script>
+    const starImages = [
+      "{{ url_for('static', filename='img/stars/star-lg.svg') }}",
+      "{{ url_for('static', filename='img/stars/star-md.svg') }}",
+      "{{ url_for('static', filename='img/stars/star-sm.svg') }}"
+    ];
+
+    const container = document.getElementById('star-animation');
+
+    function spawnStar() {
+    if (!container.classList.contains('active')) return;
+
+    const img = document.createElement('img');
+    img.src = starImages[Math.floor(Math.random() * starImages.length)];
+    img.className = 'star';
+
+    const size = Math.random() * 30 + 10;
+    img.style.width = `${size}px`;
+    img.style.height = `${size}px`;
+
+    img.style.top = `${Math.random() * 100}%`;
+    img.style.left = `${Math.random() * 100}%`;
+
+    container.appendChild(img);
+
+    setTimeout(() => container.removeChild(img), 2000); // match CSS animation duration
+    }
+
+    setInterval(() => {
+    for (let i = 0; i < 10; i++) spawnStar(); // spawn multiple at once
+    }, 300); // adjust interval to control intensity
+
+    const loadingLabel = document.querySelector("#loading-label");
+    function loadingLabelLoop(time) {
+        loadingLabel.textContent = "Loading."
+        setTimeout(()=>{loadingLabel.textContent = "Loading.."}, time/3)
+        setTimeout(()=>{loadingLabel.textContent = "Loading..."}, 2*(time/3))
+        setTimeout(()=>{loadingLabelLoop(time)}, time)
+    }
+    loadingLabelLoop(1000);
+    setTimeout(()=>{loadingLabel.style.opacity=1},500)
+</script>
