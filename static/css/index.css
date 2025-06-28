@@ -1,21 +1,29 @@
 .title {
-  font-size: 3em;
+  font-size: 5em;
   margin-bottom: 2rem;
 }
 
 .input-toggle {
   display: inline-flex;
-  border-radius: 25px;
+  border-radius: 2rem;
   overflow: hidden;
   margin-bottom: 1rem;
+  background-color: #A893D8;
+  box-shadow: inset 0px 0px 10px 0px black, 0px 4px 6.4px 0 #00000077;
 }
 
 .input-toggle button {
-  padding: 0.5rem 1rem;
+  padding: 0.1rem 1rem;
+  font-size: 2rem;
   border: none;
-  background: #9a80d4;
+  background: transparent;
   color: black;
   cursor: pointer;
+  margin: 0.25rem;
+  width: 5rem;
+  height: 4.5rem;
+  text-align: center;
+  transition: background-color 0.2s ease;
 }
 
 .input-toggle .active {
@@ -27,13 +35,25 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #4e3273;
+  background: #5E4597;
   border-radius: 50px;
-  padding: 0.75rem;
+  padding: 1.5rem 2rem;
   margin-bottom: 1rem;
   width: fit-content;
   margin-left: auto;
   margin-right: auto;
+  transition: 0.9s ease;
+  box-shadow: inset 0 -5px 22.5px 0px black, 0px 4px 6.4px #00000077;
+}
+
+.story-input:hover {
+  transition: 0.2s ease;
+  transform: scale(105%);
+  background: #7455bb;
+}
+
+.story-input label {
+  padding-left: 15px;
 }
 
 .story-input input {
@@ -42,15 +62,43 @@
   color: white;
   font-size: 1rem;
   outline: none;
-  width: 300px;
+  min-width: 50px;
+  max-width: 50vw;
+  font-family: "Fuzzy Bubbles", sans-serif;
+  font-weight: 700;
+  transition: margin 0.2s ease;
+}
+
+.story-input input:not(:placeholder-shown) {
+  /* your styles here */
+  margin-left: 0.25rem;
+}
+
+.story-input input::placeholder {
+  color: #b4a2ff;
 }
 
 .submit-btn {
   background: transparent;
   border: none;
-  color: #b4a2ff;
+  color: #909090;
   font-size: 1.5rem;
+}
+
+.submit-btn:not(.disabled) {
+  color: #b4a2ff;
   cursor: pointer;
+  transition: 0.5s ease;
+}
+
+.submit-btn:not(.disabled):hover {
+  transition: 0.2s ease;
+  scale: 150%;
+}
+
+.submit-btn:not(.disabled):active {
+  transition: 0.1s ease;
+  scale: 75%;
 }
 
 .tagline {

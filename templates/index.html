@@ -1,36 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>APP NAME</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>APP NAME</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fuzzy+Bubbles:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="background">
-    <div class="stars top-left"></div>
-    <div class="stars top-right"></div>
-    <div class="container">
-      <h1 class="title">APP NAME</h1>
+    <img id="bg-img" src="{{ url_for('static', filename='img/background-vector.svg') }}">
+    <div class="background">
+        <div class="stars top-left"></div>
+        <div class="stars top-right"></div>
+        <div class="container">
+            <h1 class="title">APP NAME</h1>
 
-      <div class="input-toggle">
-        <button class="text-mode active">T</button>
-        <button class="voice-mode">🎤</button>
-      </div>
+            <div class="input-toggle">
+                <button class="text-mode active" style="border-radius: 2rem 0.2rem 0.2rem 2rem">T</button>
+                <button class="voice-mode" style="border-radius: 0.2rem 2rem 2rem 0.2rem">🎤</button>
+            </div>
 
-      <div class="story-input">
-        <input type="text" placeholder="Tell me a story about..." />
-        <button class="submit-btn">➤</button>
-      </div>
+            <div class="story-input" onclick="focusInput(event)">
+                <label type="text">Tell me a story about</label>
+                <input type="text" placeholder="..." oninput="toggleButton(this)" />
+                <button class="submit-btn disabled" disabled>➤</button>
+            </div>
 
-      <p class="tagline">
-        APP NAME™ takes your bedtime story ideas <br />
-        and brings them to life using Google Gemini!
-      </p>
+            <p class="tagline">
+                APP NAME™ takes your bedtime story ideas <br />
+                and brings them to life using Google Gemini!
+            </p>
+        </div>
+        <div class="stars bottom-left"></div>
+        <div class="stars bottom-right"></div>
     </div>
-    <div class="stars bottom-left"></div>
-    <div class="stars bottom-right"></div>
-  </div>
 </body>
 </html>
+
+<script>
+  function focusInput(e) {
+    // Only focus if the clicked element is NOT the button!
+    if (!e.target.closest('button')) {
+      e.currentTarget.querySelector('input').focus();
+    }
+  }
+  function toggleButton(input) {
+    const btn = input.parentElement.querySelector('button');
+    btn.disabled = input.value.trim() === '';
+    btn.classList.toggle("disabled",input.value.trim() === '');
+  }
+
+  function toggleInputMode(clickedBtn) {
+    const buttons = document.querySelectorAll('.input-toggle button');
+    buttons.forEach(btn => btn.classList.remove('active'));
+    clickedBtn.classList.add('active');
+  }
+
+  // Attach event listeners after DOM loads
+  window.onload = () => {
+    document.querySelectorAll('.input-toggle button').forEach(btn => {
+      btn.addEventListener('click', () => toggleInputMode(btn));
+    });
+  };
+</script>

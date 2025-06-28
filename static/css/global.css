@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  font-family: 'Comic Sans MS', cursive, sans-serif;
+  font-family: "Fuzzy Bubbles", sans-serif;
   color: white;
   background: linear-gradient(to bottom, #2a004f, #15002b);
   overflow: hidden;
@@ -13,3 +13,27 @@ body {
     align-items: center;
     height: 100vh;
 }
+
+#bg-img {
+  z-index: -1;
+  position: absolute;
+  height: 80vh;
+  top: 10vh;
+  width: 100vw;
+  filter: blur(50px);
+}
+
+
+/* FONTS */
+.fuzzy-bubbles-regular {
+  font-family: "Fuzzy Bubbles", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.fuzzy-bubbles-bold {
+  font-family: "Fuzzy Bubbles", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
