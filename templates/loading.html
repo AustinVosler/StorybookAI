@@ -27,6 +27,9 @@
                 <p id="main-loading-tip" style="opacity: 0;">fsfdsfdsfs</p>
             </div>
         </div>
+        <div class="bar-holder">
+            <div class="bar"><div class="completion"></div></div>
+        </div>
         <div id="gradient-container"></div>
     </div>
 
@@ -210,6 +213,10 @@
     }
 
 
+    function updateBar(num) {
+        document.querySelector(".bar-holder .bar .completion").style.width = (num*100)+"%"
+    }
+
     async function checkStatus() {
         console.log("CHECKING STATUS");
         const res = await fetch('/status');
@@ -218,6 +225,7 @@
             console.log("YYYYEEEEEEEESSSSSSSSSSSS");
             finish(json.result);
         } else {
+            updateBar(json.result.image_count)
             console.log("nope...");
             setTimeout(checkStatus, 200); // Retry again and again and again
         }
