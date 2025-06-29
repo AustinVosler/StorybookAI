@@ -17,3 +17,45 @@
     transition: 0.2s ease;
     scale:110%;
 }
+
+
+.content {
+    position: relative;
+    margin: auto;
+    max-width: 60vw;
+    top: 10vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    border: solid 1px white;
+    padding: 2%;
+
+    text-align: center;
+}
+
+.side-by-side {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    max-width: 80%;
+    gap: 50px;
+    margin-top: 50px;
+}
+
+.content a {
+    color: #9976e9;
+}
+
+.side-by-side a {
+    scale: 300%;
+    filter: brightness(5000000%);
+    transition: 0.5s ease;
+}
+
+.side-by-side a:hover {
+    transition: 0.2s ease;
+    scale: 350%;
+}
