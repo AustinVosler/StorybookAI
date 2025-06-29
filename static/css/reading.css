@@ -151,7 +151,9 @@ p{
     box-shadow: 0px 0px 20px black, 0px 0px 7px rgba(0,0,0,1) inset;
     color:black;
 
-    transform: translate(0,3vh)
+    transform: translate(0,3vh);
+    transition: transform 0.1s ease;
+    transform-style: preserve-3d;
 }
 
 .home-btn {

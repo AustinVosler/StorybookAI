@@ -177,6 +177,27 @@
     function homeButtonPressed() {
         window.location.replace("/")
     }
+
+    const centerDiv = document.querySelector('.center-div');
+
+    // Attach mousemove to document for 3D transform effect
+    document.addEventListener('mousemove', (e) => {
+        const rect = centerDiv.getBoundingClientRect();
+        // Compute center of centerDiv
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        // Mouse position relative to center of centerDiv
+        const offsetX = e.clientX - centerX;
+        const offsetY = e.clientY - centerY;
+        // The effect is the same even if mouse is outside the div
+        const rotateX = -(offsetY) / 20;
+        const rotateY = (offsetX) / 20;
+        centerDiv.style.transform = `translate(0,3vh) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    });
+
+    document.addEventListener('mouseleave', () => {
+        centerDiv.style.transform = 'translate(0,3vh) rotateX(0deg) rotateY(0deg)';
+    });
 </script>
 
 
