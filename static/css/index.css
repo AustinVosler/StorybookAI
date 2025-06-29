@@ -256,3 +256,33 @@
 .top-right { top: 1rem; right: 1rem; }
 .bottom-left { bottom: 1rem; left: 1rem; }
 .bottom-right { bottom: 1rem; right: 1rem; }
+
+
+#center-star-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.star {
+  position: absolute;
+  transition: transform 2s ease-out, opacity 2s;
+  opacity: 0;
+  animation: fade-in 10s ease;
+}
+
+@keyframes fade-in {
+  from{opacity:0; transform: translate(0,0)}
+  10%{opacity: 1;}
+  90% {
+    opacity:1;
+  }
+  to {
+    opacity:0;
+    transform: translate(5%,5%);
+  }
+}

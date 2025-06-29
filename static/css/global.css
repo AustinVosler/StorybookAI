@@ -1,3 +1,10 @@
+@font-face {
+  font-family: 'Storyboo';
+  src: url('/static/fonts/Storyboo.TTF') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 body {
   margin: 0;
   font-family: "Fuzzy Bubbles", sans-serif;
