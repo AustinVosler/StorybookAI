@@ -44,10 +44,81 @@ Each page of the story comes to life with vibrant, AI-generated illustrations pe
     </div>
 
   </div>
+
+  <div id="center-star-ring"></div>
 </body>
 
 <script>
     function homeButtonPressed() {
       window.location.replace("/")
     }
+
+
+
+    const starRingContainer = document.getElementById("center-star-ring");
+const starRingImages = [
+  "{{ url_for('static', filename='img/stars/star-lg.svg') }}",
+  "{{ url_for('static', filename='img/stars/star-md.svg') }}",
+  "{{ url_for('static', filename='img/stars/star-sm.svg') }}"
+];
+
+function spawnCenterRingStar() {
+  const img = document.createElement("img");
+  img.src = starRingImages[Math.floor(Math.random() * starRingImages.length)];
+  img.className = "star";
+
+  const size = Math.random() * 30 + 20;
+  img.style.width = `${size}px`;
+  img.style.height = `${size}px`;
+  img.style.position = "absolute";
+
+  const centerX = window.innerWidth / 2;
+  const centerY = window.innerHeight / 2;
+
+  let x, y;
+  const minDistance = 300; // minimum distance from center
+
+  let tries = 0;
+  do {
+    x = Math.random() * window.innerWidth;
+    y = Math.random() * window.innerHeight;
+    tries++;
+    if (tries > 50) break; // avoid infinite loops
+  } while (Math.hypot(x - centerX, y - centerY) < minDistance);
+
+  img.style.left = `${x - size / 2}px`;
+  img.style.top = `${y - size / 2}px`;
+  // img.style.opacity = 0;
+
+  starRingContainer.appendChild(img);
+  // requestAnimationFrame(() => (img.style.opacity = 1));
+  
+  setTimeout(() => starRingContainer.removeChild(img), 10000);
+
+  setTimeout(()=>{spawnCenterRingStar()},Math.random()*1000+500);
+}
+
+spawnCenterRingStar();
+
+// setInterval(spawnCenterRingStar, 1000); // slow rate
+
+  function checkEnter(e) {
+    console.log("KEU PRESED")
+    if (e.key === "Enter" && !document.querySelector('.submit-btn').classList.contains('disabled')) {
+      document.querySelector(".bg-gradient#button-gradient").style.opacity = 1
+      document.querySelector(".story-input").classList.add("hovering-submit")
+
+      document.querySelector(".story-input").style.transition = "0.2s ease";
+      document.querySelector(".story-input").style.scale = "115%";
+      setTimeout(()=>{document.querySelector(".story-input").style.scale = "90%";},200);
+      setTimeout(()=>{
+        document.querySelector(".story-input").style.transition = "0.5s ease";
+        document.querySelector(".story-input").style.scale = "100%";
+      },400);
+
+      setTimeout(()=>{textSendButtonPressed();},1000);
+    }
+  }
+
+
 </script>
