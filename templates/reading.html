@@ -34,6 +34,7 @@
                     </button>
                 </div>
                 <div class="center-div">
+                    <div class="glare"></div>
                     <img id="main-image" src="static/images/1_1.png" alt="Main Image" class="main-image">
                     <div id="page-text" class="page-text">Loading text...</div>
                 </div>
@@ -180,23 +181,32 @@
 
     const centerDiv = document.querySelector('.center-div');
 
-    // Attach mousemove to document for 3D transform effect
+    // Glare effect
+    const glare = document.querySelector('.glare');
     document.addEventListener('mousemove', (e) => {
         const rect = centerDiv.getBoundingClientRect();
-        // Compute center of centerDiv
         const centerX = rect.left + rect.width / 2;
         const centerY = rect.top + rect.height / 2;
-        // Mouse position relative to center of centerDiv
         const offsetX = e.clientX - centerX;
         const offsetY = e.clientY - centerY;
-        // The effect is the same even if mouse is outside the div
         const rotateX = -(offsetY) / 20;
         const rotateY = (offsetX) / 20;
         centerDiv.style.transform = `translate(0,3vh) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+
+        const glareX = 50 - (offsetX / rect.width) * 100;
+        const glareY = 50 - (offsetY / rect.height) * 100;
+        const distance = Math.min(1, Math.sqrt(offsetX**2 + offsetY**2) / (rect.width / 2));
+        glare.style.background = `radial-gradient(circle at ${glareX}% ${glareY}%, rgba(255, 255, 255, ${0.3 * distance}), transparent 70%)`;
+        glare.style.opacity = 1;
     });
 
-    document.addEventListener('mouseleave', () => {
+    // Move mouseleave to centerDiv, and add mouseenter to re-enable glare
+    centerDiv.addEventListener('mouseleave', () => {
         centerDiv.style.transform = 'translate(0,3vh) rotateX(0deg) rotateY(0deg)';
+        glare.style.opacity = 0;
+    });
+    centerDiv.addEventListener('mouseenter', () => {
+        glare.style.opacity = 1;
     });
 </script>
 
