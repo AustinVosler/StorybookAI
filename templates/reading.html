@@ -29,7 +29,10 @@
                             alt="Left Arrow">
                     </button>
                 </div>
-                <img id="main-image" src="static/images/1_1.png" alt="Main Image" class="main-image">
+                <div class="center-div">
+                    <img id="main-image" src="static/images/1_1.png" alt="Main Image" class="main-image">
+                    <div id="page-text" class="page-text">Loading text...</div>
+                </div>
                 <div class="arrow" id="right-arrow" onclick="handleRightClick()">
                     <button style="border: none; background: none; padding: 0;">
                         <img src="{{ url_for('static', filename='img/arrow-right-circle.svg') }}" class="arrow-icon"
@@ -37,10 +40,6 @@
                     </button>
                 </div>
             </div>
-
-            <!-- <input type="text" class="textbox" placeholder="Enter your text here"> -->
-
-            <div id="page-text" class="page-text">Loading text...</div>
 
             <button id="play-button" onclick="playAudio()" style="border: none; background: none; padding: 0;">
                 <img src="{{ url_for('static', filename='img/caret-right-fill.svg') }}" width="50" height="50"
