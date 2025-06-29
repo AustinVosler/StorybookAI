@@ -374,7 +374,18 @@ spawnCenterRingStar();
   function checkEnter(e) {
     console.log("KEU PRESED")
     if (e.key === "Enter" && !document.querySelector('.submit-btn').classList.contains('disabled')) {
-      textSendButtonPressed();
+      document.querySelector(".bg-gradient#button-gradient").style.opacity = 1
+      document.querySelector(".story-input").classList.add("hovering-submit")
+
+      document.querySelector(".story-input").style.transition = "0.2s ease";
+      document.querySelector(".story-input").style.scale = "115%";
+      setTimeout(()=>{document.querySelector(".story-input").style.scale = "90%";},200);
+      setTimeout(()=>{
+        document.querySelector(".story-input").style.transition = "0.5s ease";
+        document.querySelector(".story-input").style.scale = "100%";
+      },400);
+
+      setTimeout(()=>{textSendButtonPressed();},1000);
     }
   }
 
