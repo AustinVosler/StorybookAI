@@ -45,8 +45,11 @@
     margin-top: 50px;
 }
 
-.content a {
-    color: #9976e9;
+.content a{
+    color: #ff92f2;
+}
+.content a:visited{
+    color: #b367f6;
 }
 
 .side-by-side a {
