@@ -21,6 +21,10 @@
 
         </div>
 
+        <div class="navbar">
+            <button class="home-btn" onclick="homeButtonPressed()">Home</button>
+        </div>
+
         <div class="book">
             <div class="image-container">
                 <div class="arrow" id="left-arrow" onclick="handleLeftClick()">
@@ -169,6 +173,10 @@
         audio.play().catch(err => {
             console.error("Failed to play audio:", err);
         });;
+    }
+
+    function homeButtonPressed() {
+        window.location.replace("/")
     }
 </script>
 
