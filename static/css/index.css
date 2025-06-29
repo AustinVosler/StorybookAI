@@ -307,3 +307,11 @@
     transform: translate(5%,5%);
   }
 }
+
+.bottomtext {
+  font-family: 'Courier New', Courier, monospace;
+  position: fixed;
+  bottom: 10px;
+  font-size: 0.75rem;
+  color: #999;
+}
