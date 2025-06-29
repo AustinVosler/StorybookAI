@@ -16,6 +16,11 @@
 <body>
   <img id="bg-img" src="{{ url_for('static', filename='img/background-vector.svg') }}">
   <div class="background">
+
+    <div class="navbar">
+      <button class="about-btn" onclick="aboutButtonPressed()">About</button>
+    </div>
+    
     <div class="container text-mode">
       <h1 class="title" style="font-weight: 700;">Storybook AI</h1>
 
@@ -377,5 +382,9 @@ spawnCenterRingStar();
       textSendButtonPressed();
     }
   }
+
+  function aboutButtonPressed() {
+      window.location.replace("/about")
+    }
 
 </script>

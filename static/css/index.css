@@ -315,3 +315,23 @@
   font-size: 0.75rem;
   color: #999;
 }
+
+.about-btn {
+    position: fixed;
+    top: 20px;
+    left: 15px;
+    background-color: transparent;
+    color: white;
+    border: none;
+    font-size: 1.6rem;
+    cursor: pointer;
+    font-family: "Fuzzy Bubbles", sans-serif;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.5s ease;
+}
+
+.about-btn:hover {
+    transition: 0.2s ease;
+    scale:110%;
+}

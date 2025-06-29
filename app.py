@@ -44,6 +44,10 @@ def home():
 def loading():
     return render_template('loading.html')
 
+@app.route("/about")
+def about():
+    return render_template('about.html')
+
 @app.route("/reading")
 def reading():
     image_dir = os.path.join(app.static_folder, "images")
