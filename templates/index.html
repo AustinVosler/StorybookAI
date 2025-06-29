@@ -38,7 +38,7 @@
         <div class="bg-gradient" id="button-gradient"></div>
         <div class="text-input-container">
           <label type="text">Tell me a story about</label>
-          <input type="text" placeholder="..." id="story-query" oninput="toggleButton(this)" />
+          <input type="text" placeholder="..." id="story-query" oninput="toggleButton(this)" onkeydown="checkEnter(event)" />
           <button class="submit-btn disabled" disabled onclick="textSendButtonPressed()">➤</button>
         </div>
         <div class="voice-input-container" style="display: none;">
@@ -361,5 +361,11 @@ spawnCenterRingStar();
 
 // setInterval(spawnCenterRingStar, 1000); // slow rate
 
+  function checkEnter(e) {
+    console.log("KEU PRESED")
+    if (e.key === "Enter" && !document.querySelector('.submit-btn').classList.contains('disabled')) {
+      textSendButtonPressed();
+    }
+  }
 
 </script>
