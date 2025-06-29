@@ -23,20 +23,29 @@
 
         <div class="book">
             <div class="image-container">
-                <div class="arrow" id="left-arrow" onclick="handleLeftClick()">&#8592;</div>
+                <div class="arrow" id="left-arrow" onclick="handleLeftClick()">
+                    <button style="border: none; background: none; padding: 0;">
+                        <img src="{{ url_for('static', filename='img/arrow-left-circle.svg') }}" class="arrow-icon"
+                            alt="Left Arrow">
+                    </button>
+                </div>
                 <img id="main-image" src="static/images/1_1.png" alt="Main Image" class="main-image">
-                <div class="arrow" id="right-arrow" onclick="handleRightClick()">&#8594;</div>
+                <div class="arrow" id="right-arrow" onclick="handleRightClick()">
+                    <button style="border: none; background: none; padding: 0;">
+                        <img src="{{ url_for('static', filename='img/arrow-right-circle.svg') }}" class="arrow-icon"
+                            alt="Right Arrow">
+                    </button>
+                </div>
             </div>
 
             <!-- <input type="text" class="textbox" placeholder="Enter your text here"> -->
 
             <div id="page-text" class="page-text">Loading text...</div>
 
-            <button id="play-button" onclick="playAudio()">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-play-fill" viewBox="0 0 16 16">
-                    <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"/>
-                </svg>
-</button>
+            <button id="play-button" onclick="playAudio()" style="border: none; background: none; padding: 0;">
+                <img src="{{ url_for('static', filename='img/caret-right-fill.svg') }}" width="50" height="50"
+                    alt="Play Button">
+            </button>
 
             <audio id="audio-player" src="static/audio/1_1.wav"></audio>
         </div>

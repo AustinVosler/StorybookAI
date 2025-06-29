@@ -94,6 +94,12 @@
     margin: 0 20px;
 }
 
+.arrow-icon {
+    width: 100px;
+    height: 100px;
+    filter: invert(100%) brightness(100%);
+}
+
 .main-image {
     max-width: 80vw;
     max-height: 60vh;
