@@ -189,8 +189,8 @@
         const centerY = rect.top + rect.height / 2;
         const offsetX = e.clientX - centerX;
         const offsetY = e.clientY - centerY;
-        const rotateX = -(offsetY) / 20;
-        const rotateY = (offsetX) / 20;
+        const rotateX = -(offsetY) / 30;
+        const rotateY = (offsetX) / 30;
         centerDiv.style.transform = `translate(0,3vh) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
 
         const glareX = 50 - (offsetX / rect.width) * 100;

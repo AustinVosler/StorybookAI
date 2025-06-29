@@ -109,9 +109,11 @@ p{
 .main-image {
     max-width: 50vh;
     max-height: 50vh;
+    padding: 1% 5%;
     object-fit: contain;
     user-select: none;
     -webkit-user-drag: none;
+    scale: 93%;
 }
 
 .textbox {
