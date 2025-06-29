@@ -31,6 +31,27 @@
   color: white;
 }
 
+.input-toggle button svg {
+  scale: 250%;
+  transform: translateY(-8%);
+  transition: transform 0.25s ease;
+}
+
+.input-toggle .text-mode.active svg {
+  transform: translateY(-8%) translateX(4%);
+}
+.input-toggle .text-mode:not(.active) svg {
+  transform: translateY(-8%) translateX(16%);
+}
+
+.input-toggle .voice-mode:not(.active) svg {
+  transform: translateY(-8%) translateX(-16%);
+}
+
+.input-toggle .voice-mode:not.active svg {
+  transform: translateY(-8%) translateX(-4%);
+}
+
 .story-input {
   position: relative;
   display: flex;
